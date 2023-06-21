@@ -8,9 +8,8 @@ import { ThemedTitleV2 } from "@refinedev/mui";
 
 import { CredentialResponse } from "../interfaces/google";
 
-// Todo: Update your Google Client ID here
-const GOOGLE_CLIENT_ID =
-  "1041339102270-e1fpe2b6v6u1didfndh7jkjmpcashs4f.apps.googleusercontent.com";
+import logo from '../assets/logo.svg';
+
 
 export const Login: React.FC = () => {
   const { mutate: login } = useLogin<CredentialResponse>();
@@ -26,7 +25,7 @@ export const Login: React.FC = () => {
       try {
         window.google.accounts.id.initialize({
           ux_mode: "popup",
-          client_id: GOOGLE_CLIENT_ID,
+          client_id: 'process.env.REACT_APP_GOOGLE_CLIENT_ID',
           callback: async (res: CredentialResponse) => {
             if (res.credential) {
               login(res);
@@ -60,6 +59,12 @@ export const Login: React.FC = () => {
         gap="36px"
         justifyContent="center"
         flexDirection="column"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justufyContent: "center",
+          height: "100vh",
+        }}
       >
         <ThemedTitleV2
           collapsed={false}
@@ -69,7 +74,22 @@ export const Login: React.FC = () => {
           }}
         />
 
+        <Box
+         sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+         }}
+        >
+          <div>
+            <img src={logo} alt="LEMA logo" />
+          </div>
+        </Box>
+
+        <Box mt={4}>
         <GoogleButton />
+        </Box>
 
         <Typography align="center" color={"text.secondary"} fontSize="12px">
           Powered by
