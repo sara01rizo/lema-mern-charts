@@ -1,3 +1,11 @@
+import React from "react";
+
+import { BrowserRouter, Outlet, Route, RouterProvider, Routes } from "react-router-dom";
+import { parseJwt } from "utils/parse-jwt";
+
+import { ColorModeContextProvider } from "./contexts/color-mode";
+import { MuiInferencer } from "@refinedev/inferencer/mui";
+
 import {
   AuthBindings,
   Authenticated,
@@ -44,12 +52,26 @@ import {
   CategoryList,
   CategoryShow,
 } from "pages/categories";
-import { Login } from "pages/login";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import { parseJwt } from "utils/parse-jwt";
-import { Header } from "./components/layout/header";
-import { ColorModeContextProvider } from "./contexts/color-mode";
-import { MuiInferencer } from "@refinedev/inferencer/mui";
+
+import {
+  Login,
+  Home,
+  Agents,
+  MyProfile,
+  PropertyDetails,
+  AllProperties,
+  CreateProperty,
+  AgentProfile,
+  EditProperty,
+} from "pages";
+
+import {
+  Header,
+  Layout,
+  Sider,
+  Title
+} from "./components/index";
+
 
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
@@ -173,6 +195,7 @@ function App() {
                   create: "/categories/create",
                   edit: "/categories/edit/:id",
                   show: "/categories/show/:id",
+                  icon: <VillaOutlined />,
                   meta: {
                     canDelete: true,
                   },
@@ -223,6 +246,13 @@ function App() {
                   },
                 },
               ]}
+              Title={Title}
+              Sider={Sider}
+              Layout={Layout}
+              Header={Header}
+              LoginPage={Login}
+              DashboardPage={Home}
+
               options={{
                 syncWithLocation: true,
                 warnWhenUnsavedChanges: true,
