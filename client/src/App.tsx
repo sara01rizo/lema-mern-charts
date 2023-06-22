@@ -13,6 +13,14 @@ import {
   ThemedLayoutV2,
 } from "@refinedev/mui";
 
+import {
+  AccountCircleOutlined,
+  ChatBubbleOutline,
+  PeopleAltOutlined,
+  StarOutlineRounded,
+  VillaOutlined,
+} from '@mui/icons-material';
+
 import CssBaseline from "@mui/material/CssBaseline";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import routerBindings, {
@@ -41,6 +49,7 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { parseJwt } from "utils/parse-jwt";
 import { Header } from "./components/layout/header";
 import { ColorModeContextProvider } from "./contexts/color-mode";
+import { MuiInferencer } from "@refinedev/inferencer/mui";
 
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
@@ -153,6 +162,7 @@ function App() {
                   create: "/blog-posts/create",
                   edit: "/blog-posts/edit/:id",
                   show: "/blog-posts/show/:id",
+                  icon: <VillaOutlined />,
                   meta: {
                     canDelete: true,
                   },
@@ -163,6 +173,51 @@ function App() {
                   create: "/categories/create",
                   edit: "/categories/edit/:id",
                   show: "/categories/show/:id",
+                  meta: {
+                    canDelete: true,
+                  },
+                },
+                {
+                  name: "agent",
+                  list: "/agents",
+                  create: "/agents/create",
+                  edit: "/agents/edit/:id",
+                  show: "/agents/show/:id",
+                  icon: <PeopleAltOutlined />,
+                  meta: {
+                    canDelete: true,
+                  },
+                },
+                {
+                  name: "review",
+                  list: "/reviews",
+                  create: "/reviews/create",
+                  edit: "/reviews/edit/:id",
+                  show: "/reviews/show/:id",
+                  icon: <StarOutlineRounded />,
+                  meta: {
+                    canDelete: true,
+                  },
+                },
+                {
+                  name: "message",
+                  list: "/messages",
+                  create: "/messages/create",
+                  edit: "/messages/edit/:id",
+                  show: "/messages/show/:id",
+                  icon: < ChatBubbleOutline />,
+                  meta: {
+                    canDelete: true,
+                  },
+                },
+                {
+                  name: "my-profile",
+                  options: { label: 'My Profile' },
+                  list: MuiInferencer,
+                  create: "/categories/create",
+                  edit: "/categories/edit/:id",
+                  show: "/categories/show/:id",
+                  icon: <AccountCircleOutlined />,
                   meta: {
                     canDelete: true,
                   },
