@@ -1,8 +1,6 @@
-import React from "react";
-
 import { BrowserRouter, Outlet, Route, RouterProvider, Routes } from "react-router-dom";
 import { parseJwt } from "utils/parse-jwt";
-
+import { GoogleLogin } from '@react-oauth/google';
 import { ColorModeContextProvider } from "./contexts/color-mode";
 import { MuiInferencer } from "@refinedev/inferencer/mui";
 
@@ -13,6 +11,15 @@ import {
   Refine,
 } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
+import routerBindings, {
+  CatchAllNavigate,
+  DocumentTitleHandler,
+  NavigateToResource,
+  UnsavedChangesNotifier,
+} from "@refinedev/react-router-v6";
+import dataProvider from "@refinedev/simple-rest";
+import axios, { AxiosRequestConfig } from "axios";
+import { CredentialResponse } from "interfaces/google";
 
 import {
   ErrorComponent,
@@ -31,15 +38,7 @@ import {
 
 import CssBaseline from "@mui/material/CssBaseline";
 import GlobalStyles from "@mui/material/GlobalStyles";
-import routerBindings, {
-  CatchAllNavigate,
-  DocumentTitleHandler,
-  NavigateToResource,
-  UnsavedChangesNotifier,
-} from "@refinedev/react-router-v6";
-import dataProvider from "@refinedev/simple-rest";
-import axios, { AxiosRequestConfig } from "axios";
-import { CredentialResponse } from "interfaces/google";
+
 import {
   BlogPostCreate,
   BlogPostEdit,
@@ -55,14 +54,14 @@ import {
 
 import {
   Login,
-  Home,
-  Agents,
-  MyProfile,
-  PropertyDetails,
-  AllProperties,
-  CreateProperty,
-  AgentProfile,
-  EditProperty,
+  // Home,
+  // Agents,
+  // MyProfile,
+  // PropertyDetails,
+  // AllProperties,
+  // CreateProperty,
+  // AgentProfile,
+  // EditProperty,
 } from "pages";
 
 import {
@@ -172,6 +171,7 @@ function App() {
           <CssBaseline />
           <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
           <RefineSnackbarProvider>
+          <GoogleLogin onSuccess={postMessage} onError={Error} />
             <Refine
               dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
               notificationProvider={notificationProvider}
@@ -246,12 +246,12 @@ function App() {
                   },
                 },
               ]}
-              Title={Title}
-              Sider={Sider}
-              Layout={Layout}
-              Header={Header}
-              LoginPage={Login}
-              DashboardPage={Home}
+              // Title={Title}
+              // Sider={Sider}
+              // Layout={Layout}
+              // Header={Header}
+              // LoginPage={Login}
+              // DashboardPage={Home}
 
               options={{
                 syncWithLocation: true,
