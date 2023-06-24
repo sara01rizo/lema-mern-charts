@@ -13,6 +13,7 @@ import logo from '../assets/logo.svg';
 
 export const Login: React.FC = () => {
   const { mutate: login } = useLogin<CredentialResponse>();
+  const client_id = 'process.env.REACT_APP_GOOGLE_CLIENT_ID';
 
   const GoogleButton = (): JSX.Element => {
     const divRef = useRef<HTMLDivElement>(null);

@@ -53,14 +53,14 @@ import {
 
 import {
   Login,
-  // Home,
-  // Agents,
-  // MyProfile,
-  // PropertyDetails,
-  // AllProperties,
-  // CreateProperty,
-  // AgentProfile,
-  // EditProperty,
+  Home,
+  Agents,
+  MyProfile,
+  PropertyDetails,
+  AllProperties,
+  CreateProperty,
+  AgentProfile,
+  EditProperty,
 } from "pages";
 
 import {
@@ -188,6 +188,17 @@ function App() {
                   },
                 },
                 {
+                  name: "property",
+                  list: MuiInferencer,
+                  create: "/property/create",
+                  edit: "/property/edit/:id",
+                  show: "/property/show/:id",
+                  icon: <VillaOutlined />,
+                  meta: {
+                    canDelete: true,
+                  },
+                },
+                {
                   name: "categories",
                   list: "/categories",
                   create: "/categories/create",
@@ -244,12 +255,12 @@ function App() {
                   },
                 },
               ]}
-              // Title={Title}
-              // Sider={Sider}
-              // Layout={Layout}
-              // Header={Header}
-              // LoginPage={Login}
-              // DashboardPage={Home}
+              Title={Title}
+              Sider={Sider}
+              Layout={Layout}
+              Header={Header}
+              LoginPage={Login}
+              DashboardPage={Home}
 
               options={{
                 syncWithLocation: true,
