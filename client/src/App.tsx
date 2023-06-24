@@ -1,10 +1,24 @@
+import { BrowserRouter, Outlet, Route, RouterProvider, Routes } from "react-router-dom";
+import { parseJwt } from "utils/parse-jwt";
+import { GoogleLogin } from '@react-oauth/google';
+import { ColorModeContextProvider } from "./contexts/color-mode";
+import { MuiInferencer } from "@refinedev/inferencer/mui";
+
 import {
   AuthBindings,
   Authenticated,
-  GitHubBanner,
   Refine,
 } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
+import routerBindings, {
+  CatchAllNavigate,
+  DocumentTitleHandler,
+  NavigateToResource,
+  UnsavedChangesNotifier,
+} from "@refinedev/react-router-v6";
+import dataProvider from "@refinedev/simple-rest";
+import axios, { AxiosRequestConfig } from "axios";
+import { CredentialResponse } from "interfaces/google";
 
 import {
   ErrorComponent,
@@ -23,15 +37,7 @@ import {
 
 import CssBaseline from "@mui/material/CssBaseline";
 import GlobalStyles from "@mui/material/GlobalStyles";
-import routerBindings, {
-  CatchAllNavigate,
-  DocumentTitleHandler,
-  NavigateToResource,
-  UnsavedChangesNotifier,
-} from "@refinedev/react-router-v6";
-import dataProvider from "@refinedev/simple-rest";
-import axios, { AxiosRequestConfig } from "axios";
-import { CredentialResponse } from "interfaces/google";
+
 import {
   BlogPostCreate,
   BlogPostEdit,
@@ -44,12 +50,26 @@ import {
   CategoryList,
   CategoryShow,
 } from "pages/categories";
-import { Login } from "pages/login";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import { parseJwt } from "utils/parse-jwt";
-import { Header } from "./components/layout/header";
-import { ColorModeContextProvider } from "./contexts/color-mode";
-import { MuiInferencer } from "@refinedev/inferencer/mui";
+
+import {
+  Login,
+  Home,
+  Agents,
+  MyProfile,
+  PropertyDetails,
+  AllProperties,
+  CreateProperty,
+  AgentProfile,
+  EditProperty,
+} from "pages";
+
+import {
+  Header,
+  Layout,
+  Sider,
+  Title
+} from "./components/index";
+
 
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
@@ -144,12 +164,12 @@ function App() {
 
   return (
     <BrowserRouter>
-      <GitHubBanner />
       <RefineKbarProvider>
         <ColorModeContextProvider>
           <CssBaseline />
           <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
           <RefineSnackbarProvider>
+          <GoogleLogin onSuccess={postMessage} onError={Error} />
             <Refine
               dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
               notificationProvider={notificationProvider}
@@ -168,11 +188,23 @@ function App() {
                   },
                 },
                 {
+                  name: "property",
+                  list: MuiInferencer,
+                  create: "/property/create",
+                  edit: "/property/edit/:id",
+                  show: "/property/show/:id",
+                  icon: <VillaOutlined />,
+                  meta: {
+                    canDelete: true,
+                  },
+                },
+                {
                   name: "categories",
                   list: "/categories",
                   create: "/categories/create",
                   edit: "/categories/edit/:id",
                   show: "/categories/show/:id",
+                  icon: <VillaOutlined />,
                   meta: {
                     canDelete: true,
                   },
@@ -223,6 +255,13 @@ function App() {
                   },
                 },
               ]}
+              Title={Title}
+              Sider={Sider}
+              Layout={Layout}
+              Header={Header}
+              LoginPage={Login}
+              DashboardPage={Home}
+
               options={{
                 syncWithLocation: true,
                 warnWhenUnsavedChanges: true,

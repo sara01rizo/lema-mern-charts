@@ -13,6 +13,7 @@ import logo from '../assets/logo.svg';
 
 export const Login: React.FC = () => {
   const { mutate: login } = useLogin<CredentialResponse>();
+  const client_id = 'process.env.REACT_APP_GOOGLE_CLIENT_ID';
 
   const GoogleButton = (): JSX.Element => {
     const divRef = useRef<HTMLDivElement>(null);
@@ -24,8 +25,12 @@ export const Login: React.FC = () => {
 
       try {
         window.google.accounts.id.initialize({
-          ux_mode: "popup",
+          ux_mode: 'popup',
           client_id: 'process.env.REACT_APP_GOOGLE_CLIENT_ID',
+          login_uri: "http://localhost:3000",
+          auto_select: true,
+          context: 'signin',
+          cancel_on_tap_outside: true,
           callback: async (res: CredentialResponse) => {
             if (res.credential) {
               login(res);
